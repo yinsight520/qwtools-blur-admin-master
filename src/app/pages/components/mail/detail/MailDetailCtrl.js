@@ -11,7 +11,12 @@
   /** @ngInject */
   function MailDetailCtrl($stateParams, mailMessages) {
     var vm = this;
-    vm.mail = mailMessages.getMessageById($stateParams.id);
+    var mail = mailMessages.getMessageById($stateParams.id);
+    if (mail && mail.labels.indexOf($stateParams.label) !== -1) {
+      vm.mail = mail;
+    } else {
+      vm.mail = null;
+    }
     vm.label = $stateParams.label;
   }
 
