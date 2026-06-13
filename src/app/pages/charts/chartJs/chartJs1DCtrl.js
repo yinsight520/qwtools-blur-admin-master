@@ -9,7 +9,7 @@
     .controller('chartJs1DCtrl', chartJs1DCtrl);
 
   /** @ngInject */
-  function chartJs1DCtrl($scope, baConfig) {
+  function chartJs1DCtrl($scope, baConfig, chartUtils) {
     var layoutColors = baConfig.colors;
 
     $scope.labels =["Sleeping", "Designing", "Coding", "Cycling"];
@@ -30,13 +30,8 @@
     };
 
     $scope.changeData = function () {
-      $scope.data = shuffle($scope.data);
+      $scope.data = chartUtils.shuffle($scope.data);
     };
-
-    function shuffle(o){
-      for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x){}
-      return o;
-    }
   }
 
 })();

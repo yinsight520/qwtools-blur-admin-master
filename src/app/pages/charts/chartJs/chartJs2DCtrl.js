@@ -1,6 +1,6 @@
 /**
  * @author a.demeshko
- * created on 12/16/15
+ * created on 12/17/15
  */
 (function () {
   'use strict';
@@ -9,7 +9,7 @@
     .controller('chartJs2DCtrl', chartJs2DCtrl);
 
   /** @ngInject */
-  function chartJs2DCtrl($scope) {
+  function chartJs2DCtrl($scope, chartUtils) {
     $scope.labels =["May", "Jun", "Jul", "Aug", "Sep"];
     $scope.data = [
       [65, 59, 90, 81, 56],
@@ -17,16 +17,10 @@
     ];
     $scope.series = ['Product A', 'Product B'];
 
-
     $scope.changeData = function () {
-      $scope.data[0] = shuffle($scope.data[0]);
-      $scope.data[1] = shuffle($scope.data[1]);
+      $scope.data[0] = chartUtils.shuffle($scope.data[0]);
+      $scope.data[1] = chartUtils.shuffle($scope.data[1]);
     };
-
-    function shuffle(o){
-      for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x){}
-      return o;
-    }
   }
 
 })();
