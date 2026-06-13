@@ -15,7 +15,7 @@
       return Math.sin(e) * 25 +25;
     });
 
-    stopableInterval.start($interval, function(){
+    var stopWave = stopableInterval.start($interval, function(){
       var tempArray = [];
       var lastElement = $scope.data[$scope.data.length-1];
       for(var i = $scope.data.length-1; i > 0; i--){
@@ -23,7 +23,9 @@
       }
       tempArray[0] = lastElement;
       $scope.data = tempArray;
-    }, 400)
+    }, 400);
+
+    $scope.$on('$destroy', stopWave);
   }
 
 })();

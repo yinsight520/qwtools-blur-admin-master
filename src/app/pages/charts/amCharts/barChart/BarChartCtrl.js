@@ -9,13 +9,10 @@
       .controller('BarChartCtrl', BarChartCtrl);
 
   /** @ngInject */
-  function BarChartCtrl($scope, baConfig, $element, layoutPaths) {
-    var layoutColors = baConfig.colors;
-    var id = $element[0].getAttribute('id');
-    var barChart = AmCharts.makeChart(id, {
+  function BarChartCtrl($scope, $element, amChartHelper) {
+    var layoutColors = amChartHelper.colors;
+    amChartHelper.create($scope, $element, {
       type: 'serial',
-      theme: 'blur',
-      color: layoutColors.defaultText,
       dataProvider: [
         {
           country: 'USA',
@@ -26,7 +23,6 @@
           country: 'China',
           visits: 1882,
           color: layoutColors.danger
-
         },
         {
           country: 'Japan',
@@ -81,11 +77,7 @@
         gridAlpha: 0.5,
         gridColor: layoutColors.border,
       },
-      export: {
-        enabled: true
-      },
-      creditsPosition: 'top-right',
-      pathToImages: layoutPaths.images.amChart
+      creditsPosition: 'top-right'
     });
   }
 })();

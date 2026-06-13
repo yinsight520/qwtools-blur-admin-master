@@ -9,9 +9,8 @@
     .controller('ganttChartCtrl', ganttChartCtrl);
 
   /** @ngInject */
-  function ganttChartCtrl($element) {
-    var id = $element[0].getAttribute('id');
-    var chart = AmCharts.makeChart( id, {
+  function ganttChartCtrl($scope, $element, amChartHelper) {
+    amChartHelper.create($scope, $element, {
       "type": "gantt",
       "theme": "light",
       "marginRight": 70,
@@ -287,9 +286,6 @@
         "valueLineEnabled": true,
         "zoomable":false,
         "valueZoomable":true
-      },
-      "export": {
-        "enabled": true
       }
     });
   }

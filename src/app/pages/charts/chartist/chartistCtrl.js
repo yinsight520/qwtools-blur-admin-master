@@ -223,18 +223,26 @@
       ];
     }
 
-    $timeout(function(){
-      new Chartist.Line('#line-chart', $scope.simpleLineData, $scope.simpleLineOptions);
-      new Chartist.Line('#area-chart', $scope.areaLineData, $scope.areaLineOptions);
-      new Chartist.Line('#bi-chart', $scope.biLineData, $scope.biLineOptions);
+    var charts = [];
+    var initTimeout = $timeout(function(){
+      charts.push(new Chartist.Line('#line-chart', $scope.simpleLineData, $scope.simpleLineOptions));
+      charts.push(new Chartist.Line('#area-chart', $scope.areaLineData, $scope.areaLineOptions));
+      charts.push(new Chartist.Line('#bi-chart', $scope.biLineData, $scope.biLineOptions));
 
-      new Chartist.Bar('#simple-bar', $scope.simpleBarData, $scope.simpleBarOptions);
-      new Chartist.Bar('#multi-bar', $scope.multiBarData, $scope.multiBarOptions, $scope.multiBarResponsive);
-      new Chartist.Bar('#stacked-bar', $scope.stackedBarData, $scope.stackedBarOptions);
+      charts.push(new Chartist.Bar('#simple-bar', $scope.simpleBarData, $scope.simpleBarOptions));
+      charts.push(new Chartist.Bar('#multi-bar', $scope.multiBarData, $scope.multiBarOptions, $scope.multiBarResponsive));
+      charts.push(new Chartist.Bar('#stacked-bar', $scope.stackedBarData, $scope.stackedBarOptions));
 
-      new Chartist.Pie('#simple-pie', $scope.simplePieData, $scope.simplePieOptions, $scope.pieResponsive);
-      new Chartist.Pie('#label-pie', $scope.labelsPieData, $scope.labelsPieOptions);
-      new Chartist.Pie('#donut', $scope.simpleDonutData, $scope.simpleDonutOptions, $scope.donutResponsive);
+      charts.push(new Chartist.Pie('#simple-pie', $scope.simplePieData, $scope.simplePieOptions, $scope.pieResponsive));
+      charts.push(new Chartist.Pie('#label-pie', $scope.labelsPieData, $scope.labelsPieOptions));
+      charts.push(new Chartist.Pie('#donut', $scope.simpleDonutData, $scope.simpleDonutOptions, $scope.donutResponsive));
+    });
+
+    $scope.$on('$destroy', function () {
+      $timeout.cancel(initTimeout);
+      charts.forEach(function (chart) {
+        chart.detach();
+      });
     });
   }
 })();

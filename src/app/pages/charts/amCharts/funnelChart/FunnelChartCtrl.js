@@ -9,13 +9,10 @@
       .controller('FunnelChartCtrl', FunnelChartCtrl);
 
   /** @ngInject */
-  function FunnelChartCtrl($scope, $element, layoutPaths, baConfig) {
-    var layoutColors = baConfig.colors;
-    var id = $element[0].getAttribute('id');
-    var funnelChart = AmCharts.makeChart(id, {
+  function FunnelChartCtrl($scope, $element, amChartHelper) {
+    var layoutColors = amChartHelper.colors;
+    amChartHelper.create($scope, $element, {
       type: 'funnel',
-      theme: 'blur',
-      color: layoutColors.defaultText,
       labelTickColor: layoutColors.borderDark,
       dataProvider: [
         {
@@ -60,11 +57,7 @@
       outlineThickness: 1,
       neckHeight: '0%',
       balloonText: '[[title]]:<b>[[value]]</b>',
-      export: {
-        enabled: true
-      },
-      creditsPosition: 'bottom-left',
-      pathToImages: layoutPaths
+      creditsPosition: 'bottom-left'
     });
   }
 })();

@@ -9,13 +9,10 @@
       .controller('LineChartCtrl', LineChartCtrl);
 
   /** @ngInject */
-  function LineChartCtrl($scope, baConfig, $element, layoutPaths) {
-    var layoutColors = baConfig.colors;
-    var id = $element[0].getAttribute('id');
-    var lineChart = AmCharts.makeChart(id, {
+  function LineChartCtrl($scope, $element, amChartHelper) {
+    var layoutColors = amChartHelper.colors;
+    var lineChart = amChartHelper.create($scope, $element, {
       type: 'serial',
-      theme: 'blur',
-      color: layoutColors.defaultText,
       marginTop: 0,
       marginRight: 15,
       dataProvider: [
@@ -138,11 +135,7 @@
         gridAlpha: 0.5,
         gridColor: layoutColors.border,
       },
-      export: {
-        enabled: true
-      },
-      creditsPosition: 'bottom-right',
-      pathToImages: layoutPaths.images.amChart
+      creditsPosition: 'bottom-right'
     });
 
     lineChart.addListener('rendered', zoomChart);

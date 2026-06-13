@@ -17,15 +17,26 @@
         }
 
         var i = startInterval();
+        var $win = angular.element($window);
 
-        angular.element($window).bind('focus', function () {
+        function onFocus() {
           if (i) interval.cancel(i);
           i = startInterval();
-        });
+        }
 
-        angular.element($window).bind('blur', function () {
+        function onBlur() {
           if (i) interval.cancel(i);
-        });
+        }
+
+        $win.bind('focus', onFocus);
+        $win.bind('blur', onBlur);
+
+        return function stop() {
+          if (i) interval.cancel(i);
+          i = null;
+          $win.unbind('focus', onFocus);
+          $win.unbind('blur', onBlur);
+        };
       }
     }
   }

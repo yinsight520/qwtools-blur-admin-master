@@ -9,13 +9,10 @@
       .controller('AreaChartCtrl', AreaChartCtrl);
 
   /** @ngInject */
-  function AreaChartCtrl($scope, baConfig, $element, layoutPaths) {
-    var layoutColors = baConfig.colors;
-    var id = $element[0].getAttribute('id');
-    var areaChart = AmCharts.makeChart(id, {
+  function AreaChartCtrl($scope, $element, amChartHelper) {
+    var layoutColors = amChartHelper.colors;
+    var areaChart = amChartHelper.create($scope, $element, {
       type: 'serial',
-      theme: 'blur',
-      color: layoutColors.defaultText,
       dataProvider: [
         {
           lineColor: layoutColors.info,
@@ -130,11 +127,7 @@
         gridCount: 50,
         gridAlpha: 0.5,
         gridColor: layoutColors.border,
-      },
-      export: {
-        enabled: true
-      },
-      pathToImages: layoutPaths.images.amChart
+      }
     });
 
     areaChart.addListener('dataUpdated', zoomAreaChart);

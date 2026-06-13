@@ -9,15 +9,12 @@
       .controller('PieChartCtrl', PieChartCtrl);
 
   /** @ngInject */
-  function PieChartCtrl($element, layoutPaths, baConfig) {
-    var layoutColors = baConfig.colors;
-    var id = $element[0].getAttribute('id');
-    var pieChart = AmCharts.makeChart(id, {
+  function PieChartCtrl($scope, $element, amChartHelper) {
+    var layoutColors = amChartHelper.colors;
+    var pieChart = amChartHelper.create($scope, $element, {
       type: 'pie',
       startDuration: 0,
-      theme: 'blur',
       addClassNames: true,
-      color: layoutColors.defaultText,
       labelTickColor: layoutColors.borderDark,
       legend: {
         position: 'right',
@@ -86,9 +83,6 @@
       ],
       valueField: 'litres',
       titleField: 'country',
-      export: {
-        enabled: true
-      },
       creditsPosition: 'bottom-left',
 
       autoMargins: false,
@@ -98,7 +92,6 @@
       marginLeft: 0,
       marginRight: 0,
       pullOutRadius: 0,
-      pathToImages: layoutPaths.images.amChart,
       responsive: {
         enabled: true,
         rules: [

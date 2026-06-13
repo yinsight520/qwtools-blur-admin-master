@@ -9,13 +9,11 @@
     .controller('combinedChartCtrl', combinedChartCtrl);
 
   /** @ngInject */
-  function combinedChartCtrl($element, baConfig, layoutPaths) {
-    var layoutColors = baConfig.colors;
-    var id = $element[0].getAttribute('id');
-    var chart = AmCharts.makeChart(id, {
+  function combinedChartCtrl($scope, $element, amChartHelper) {
+    var layoutColors = amChartHelper.colors;
+    var chart = amChartHelper.create($scope, $element, {
       "type": "serial",
       "theme": "none",
-      "color": layoutColors.defaultText,
       "dataDateFormat": "YYYY-MM-DD",
       "precision": 2,
       "valueAxes": [{
@@ -147,9 +145,6 @@
         "borderThickness": 1,
         "shadowAlpha": 0
       },
-      "export": {
-        "enabled": true
-      },
       "dataProvider": [{
         "date": "2013-01-16",
         "market1": 71,
@@ -240,8 +235,7 @@
         "market2": 85,
         "sales1": 4,
         "sales2": 7
-      }],
-      pathToImages: layoutPaths.images.amChart
+      }]
     });
   }
 
