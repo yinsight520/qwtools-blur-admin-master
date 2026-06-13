@@ -1,18 +1,57 @@
 <div class="task-todo-container" ng-class="{'transparent': transparent}">
-  <input type="text" value="" class="form-control task-todo" placeholder="Task to do.." ng-keyup="addToDoItem($event)" ng-model="newTodoText"/>
+  <input type="text" value="" class="form-control task-todo" placeholder="Task to do.."
+         ng-keyup="addToDoItem($event)" ng-model="newTodoText" maxlength="{{inputMaxLen}}"/>
   <i ng-click="addToDoItem('',true)" class="add-item-icon ion-plus-round"></i>
   <div class="box-shadow-border"></div>
+
+  <div class="todo-filter">
+    <span class="todo-filter-item" ng-class="{active: filter === 'all'}"
+          ng-click="filter = 'all'">All</span>
+    <span class="todo-filter-item" ng-class="{active: filter === 'active'}"
+          ng-click="filter = 'active'">Active</span>
+    <span class="todo-filter-item" ng-class="{active: filter === 'completed'}"
+          ng-click="filter = 'completed'">Completed</span>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="todo-progress" ng-show="todoList.length > 0">
+    <div class="todo-progress-bar" ng-style="{width: progressPercent() + '%'}"></div>
+  </div>
+
   <ul class="todo-list" ui-sortable ng-model="todoList">
-    <li ng-repeat="item in todoList" ng-if="!item.deleted" ng-init="activeItem=false"
-        ng-class="{checked: isChecked, active: activeItem}"
+    <li ng-repeat="item in todoList track by item.id"
+        ng-show="isVisible(item)"
+        ng-class="{'todo-completed': item.checked}"
+        ng-init="activeItem=false"
         ng-mouseenter="activeItem=true" ng-mouseleave="activeItem=false">
       <div class="blur-container"><div class="blur-box"></div></div>
       <i class="mark" style="background-color: {{::item.color}}"></i>
       <label class="todo-checkbox custom-checkbox custom-input-success">
-        <input type="checkbox" ng-model="isChecked">
+        <input type="checkbox" ng-model="item.checked">
         <span class="cut-with-dots">{{ item.text }}</span>
       </label>
-      <i class="remove-todo ion-ios-close-empty" ng-click="item.deleted = true"></i>
+      <i class="remove-todo ion-ios-close-empty" ng-click="deleteItem(item)"></i>
     </li>
   </ul>
+
+  <!-- Empty states -->
+  <div class="todo-empty" ng-show="todoList.length === 0">
+    No tasks yet. Add one above!
+  </div>
+  <div class="todo-empty" ng-show="todoList.length > 0 && visibleCount() === 0 && filter !== 'all'">
+    <span ng-show="filter === 'active'">All tasks done!</span>
+    <span ng-show="filter === 'completed'">No completed tasks.</span>
+  </div>
+
+  <div class="todo-footer" ng-show="todoList.length > 0">
+    <span class="todo-count">
+      {{ activeCount() }} left
+      <span class="todo-done-count" ng-show="completedCount() > 0">
+        · {{ completedCount() }} done · {{ progressPercent() }}%
+      </span>
+    </span>
+    <span class="todo-clear" ng-click="clearCompleted()" ng-show="completedCount() > 0">
+      Clear completed
+    </span>
+  </div>
 </div>
