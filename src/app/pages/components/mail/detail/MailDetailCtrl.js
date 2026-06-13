@@ -9,10 +9,13 @@
     .controller('MailDetailCtrl', MailDetailCtrl);
 
   /** @ngInject */
-  function MailDetailCtrl($stateParams, mailMessages) {
+  function MailDetailCtrl($stateParams, $state, mailMessages) {
     var vm = this;
-    vm.mail = mailMessages.getMessageById($stateParams.id);
     vm.label = $stateParams.label;
+    vm.mail = mailMessages.getMessageById($stateParams.id, vm.label);
+    if (!vm.mail) {
+      $state.go('components.mail.label', { label: vm.label });
+    }
   }
 
 })();

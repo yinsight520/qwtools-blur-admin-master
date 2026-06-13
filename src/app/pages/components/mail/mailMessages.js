@@ -190,7 +190,7 @@
         "labels": ['draft']
       },
       {
-        "id": "9391xdsff",
+        "id": "9391xdsfg",
         "name": "Vlad Lugovsky",
         "subject": "What next",
         "date": "2015-03-31T11:52:58",
@@ -237,10 +237,17 @@
           return m.labels.indexOf(label) != -1;
         });
       },
-      getMessageById : function(id){
-        return messages.filter(function(m){
+      getMessageById : function(id, label){
+        var candidates = messages.filter(function(m){
           return m.id == id;
-        })[0];
+        });
+        if (label) {
+          var inLabel = candidates.filter(function(m){
+            return m.labels.indexOf(label) != -1;
+          });
+          if (inLabel.length > 0) return inLabel[0];
+        }
+        return candidates[0] || null;
       }
     }
 
