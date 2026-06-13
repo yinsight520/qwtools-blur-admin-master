@@ -2,6 +2,62 @@ input.task-todo {
   margin-bottom: 8px;
 }
 
+.todo-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0 8px;
+}
+
+.todo-filters {
+  display: flex;
+}
+
+.btn-todo-filter {
+  background: none;
+  border: 1px solid transparent;
+  padding: 2px 10px;
+  font-size: 12px;
+  color: $help-text;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+  outline: none;
+
+  &:hover {
+    color: $default-text;
+  }
+
+  &.active {
+    color: $default-text;
+    border-color: $input-border;
+  }
+}
+
+.todo-count {
+  font-size: 12px;
+  color: $help-text;
+  white-space: nowrap;
+}
+
+.todo-empty {
+  text-align: center;
+  padding: 24px 0 8px;
+  color: $help-text;
+
+  i {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 6px;
+    opacity: 0.35;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+  }
+}
+
 ul.todo-list {
   margin: 0;
   padding: 0;
@@ -36,11 +92,9 @@ ul.todo-list {
     }
 
     &.checked {
-      .todo-text {
-        color: $default-text;
-      }
-      &:before {
-        background: $input-border !important;
+      label.todo-checkbox > span {
+        text-decoration: line-through;
+        opacity: 0.45;
       }
     }
 
@@ -124,6 +178,27 @@ label.todo-checkbox {
     cursor: pointer;
   }
 
+  .btn-todo-filter {
+    color: rgba(255, 255, 255, 0.5);
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    &.active {
+      color: white;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  .todo-count {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .todo-empty {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
   ul.todo-list {
     li {
       margin: 0;
@@ -172,6 +247,8 @@ label.todo-checkbox {
       }
       &.checked {
         label.todo-checkbox > span {
+          text-decoration: line-through;
+          opacity: 0.45;
           &:before {
             content: '\f00c';
           }
